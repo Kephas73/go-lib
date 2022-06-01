@@ -2,8 +2,8 @@ package logger
 
 import (
     "errors"
-    "golib/constant"
     "fmt"
+    "github.com/Kephas73/go-lib/constant"
     "github.com/getsentry/sentry-go"
     "github.com/rifflock/lfshook"
     log "github.com/sirupsen/logrus"

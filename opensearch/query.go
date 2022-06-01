@@ -1,7 +1,7 @@
 package opensearch
 
 import (
-    "golib/document"
+    "github.com/Kephas73/go-lib/document"
     "io"
 )
 

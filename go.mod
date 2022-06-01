@@ -1,4 +1,4 @@
-module golib
+module github.com/Kephas73/go-lib
 
 go 1.16
 

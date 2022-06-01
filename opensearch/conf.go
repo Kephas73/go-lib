@@ -4,8 +4,8 @@ import (
     "encoding/json"
     "fmt"
     "github.com/spf13/viper"
-    "golib/constant"
-    "golib/util"
+    "github.com/Kephas73/go-lib/constant"
+    "github.com/Kephas73/go-lib/util"
     "strings"
     "time"
 )

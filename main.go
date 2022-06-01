@@ -4,11 +4,11 @@ import (
     "bytes"
     "encoding/json"
     "fmt"
+    "github.com/Kephas73/go-lib/document"
+    "github.com/Kephas73/go-lib/logger"
+    "github.com/Kephas73/go-lib/opensearch"
+    "github.com/Kephas73/go-lib/util"
     "github.com/spf13/viper"
-    "golib/document"
-    "golib/logger"
-    "golib/opensearch"
-    "golib/util"
 )
 
 func init() {
@@ -49,19 +49,19 @@ func main() {
       }*/
 
     /*// Open search
-     opensearch.InstallOpenSearchClient()
-     for {
-      doc := document.MakeDocument()
-      doc.RandomIDDoc()
-      data := document.NewDefaultData()
-      data.EventName = "OP_Pub"
-      data.Data = ES2{Es: "123456"}
-      doc.Document = data
-    
-      fmt.Println(doc)
-      opensearch.GetOpenSearchClient().InsertDocument(doc)
-      time.Sleep(time.Second * 3)
-     }*/
+      opensearch.InstallOpenSearchClient()
+      for {
+       doc := document.MakeDocument()
+       doc.RandomIDDoc()
+       data := document.NewDefaultData()
+       data.EventName = "OP_Pub"
+       data.Data = ES2{Es: "123456"}
+       doc.Document = data
+
+       fmt.Println(doc)
+       opensearch.GetOpenSearchClient().InsertDocument(doc)
+       time.Sleep(time.Second * 3)
+      }*/
 
     // Query open search
     opensearch.InstallOpenSearchClient()
@@ -80,12 +80,12 @@ func main() {
     if err := json.NewEncoder(&buf).Encode(queryMapping); err != nil {
         panic(err)
     }
-    
+
     res, err := opensearch.GetOpenSearchClient().CountDocument([]string{"cms-*"}, &buf)
     if err != nil {
         fmt.Println(err)
     }
-    
+
     fmt.Println(res.Count)
 
 }

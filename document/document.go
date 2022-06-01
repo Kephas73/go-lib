@@ -2,7 +2,7 @@ package document
 
 import (
     "encoding/json"
-    "golib/util"
+    "github.com/Kephas73/go-lib/util"
     "time"
 )
 

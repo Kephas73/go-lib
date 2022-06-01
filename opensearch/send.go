@@ -3,9 +3,9 @@ package opensearch
 import (
     "errors"
     "fmt"
-    "golib/document"
-    "golib/logger"
-    "golib/util"
+    "github.com/Kephas73/go-lib/document"
+    "github.com/Kephas73/go-lib/logger"
+    "github.com/Kephas73/go-lib/util"
     "math"
     "time"
 )
