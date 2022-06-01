@@ -3,8 +3,8 @@ package logstash
 import (
     "errors"
     "fmt"
-    "golib/logger"
-    "golib/util"
+    "github.com/Kephas73/go-lib/logger"
+    "github.com/Kephas73/go-lib/util"
     "net"
     "time"
 )
