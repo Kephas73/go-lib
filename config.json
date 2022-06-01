@@ -1,0 +1,24 @@
+{
+    "Debug": true,
+    "Server": {
+        "Address": ":9096"
+    },
+    "Log": {
+        "Path": "./log/golib",
+        "Prefix": "golib",
+        "Description": "Must set write-permission for /var/log/golib"
+    },
+    "LogStash": {
+        "Hosts": [
+            ""
+        ]
+    },
+    "OpenSearch": {
+        "Hosts": [
+            ""
+        ],
+        "Username": "",
+        "Password": "",
+        "IndexFormat": ""
+    }
+}
