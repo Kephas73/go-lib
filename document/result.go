@@ -10,9 +10,9 @@ type Response struct {
     Aggregations struct {
         ResponseCodes struct {
             Buckets []struct {
-                KeyAsString string      `json:"key_as_string,omitempty"`
-                Key         interface{} `json:"key,omitempty"`
-                DocsCount   int         `json:"doc_count,omitempty"`
+                //KeyAsString string      `json:"key_as_string,omitempty"`
+                Key       interface{} `json:"key,omitempty"`
+                DocsCount int         `json:"doc_count,omitempty"`
             } `json:"buckets,omitempty"`
         } `json:"response_codes,omitempty"`
     } `json:"aggregations,omitempty"`

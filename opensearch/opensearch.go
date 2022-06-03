@@ -59,7 +59,7 @@ func (l *OpenSearch) Connect() (*opensearch.Client, error) {
 }
 
 func (l *OpenSearch) CreateIndex(index string, mapping interface{}) error {
-    ctx, cancel := context.WithTimeout(context.Background(), time.Duration(l.Timeout))
+    ctx, cancel := context.WithTimeout(context.Background(), time.Duration(l.Timeout)*time.Second)
     defer cancel()
 
     req := opensearchapi.IndicesCreateRequest{
@@ -74,7 +74,7 @@ func (l *OpenSearch) CreateIndex(index string, mapping interface{}) error {
 }
 
 func (l *OpenSearch) InsertDocument(index, id string, object interface{}) error {
-    ctx, cancel := context.WithTimeout(context.Background(), time.Duration(l.Timeout))
+    ctx, cancel := context.WithTimeout(context.Background(), time.Duration(l.Timeout)*time.Second)
     defer cancel()
 
     req := opensearchapi.IndexRequest{
@@ -91,7 +91,7 @@ func (l *OpenSearch) InsertDocument(index, id string, object interface{}) error 
 
 func (l *OpenSearch) CountDocument(index []string, bodyQuery io.Reader) (document.Response, error) {
     var result document.Response
-    ctx, cancel := context.WithTimeout(context.Background(), time.Duration(l.Timeout))
+    ctx, cancel := context.WithTimeout(context.Background(), time.Duration(l.Timeout)*time.Second)
     defer cancel()
 
     listQueries := make([]func(*opensearchapi.CountRequest), 0)
@@ -129,7 +129,7 @@ func (l *OpenSearch) CountDocument(index []string, bodyQuery io.Reader) (documen
 
 func (l *OpenSearch) SearchDocument(index []string, bodyQuery io.Reader) (document.Response, error) {
     var result document.Response
-    ctx, cancel := context.WithTimeout(context.Background(), time.Duration(l.Timeout))
+    ctx, cancel := context.WithTimeout(context.Background(), time.Duration(l.Timeout)*time.Second)
     defer cancel()
 
     listQueries := make([]func(request *opensearchapi.SearchRequest), 0)

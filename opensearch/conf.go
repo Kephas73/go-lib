@@ -12,6 +12,7 @@ type OpenSearchConfig struct {
     Username    string
     Password    string
     IndexFormat string
+    Timeout     int
 }
 
 var openSearchConf *OpenSearchConfig
@@ -49,4 +50,7 @@ func createConfigFromEnv(configKeys ...string) {
         openSearchConf.IndexFormat = constant.IndexDefault
     }
 
+    if openSearchConf.Timeout <= 0 {
+        openSearchConf.Timeout = constant.TimeoutDefault
+    }
 }

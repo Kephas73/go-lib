@@ -2,12 +2,14 @@ package logstash
 
 import (
     "fmt"
+    "github.com/Kephas73/go-lib/constant"
     "github.com/spf13/viper"
     "strings"
 )
 
 type LogStashConfig struct {
-    Hosts           []string
+    Hosts   []string
+    Timeout int
 }
 
 var logStashConf *LogStashConfig
@@ -31,5 +33,9 @@ func createConfigFromEnv(configKeys ...string) {
     if len(logStashConf.Hosts) == 0 {
         err := fmt.Errorf("not found hosts for logstash with env %q", fmt.Sprintf("%s.Hosts", configKey))
         panic(err)
+    }
+
+    if logStashConf.Timeout <= 0 {
+        logStashConf.Timeout = constant.TimeoutDefault
     }
 }

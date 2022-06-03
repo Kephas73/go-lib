@@ -6,7 +6,6 @@ import (
     "github.com/Kephas73/go-lib/document"
     "github.com/Kephas73/go-lib/logger"
     "github.com/Kephas73/go-lib/util"
-    "math"
     "time"
 )
 
@@ -23,7 +22,7 @@ func InstallOpenSearchClient() *OpenSearchClient {
     createConfigFromEnv()
 
     if openSearchClient == nil {
-        mC := New(openSearchConf.Hosts, openSearchConf.Username, openSearchConf.Password, openSearchConf.IndexFormat, math.MaxInt32)
+        mC := New(openSearchConf.Hosts, openSearchConf.Username, openSearchConf.Password, openSearchConf.IndexFormat, openSearchConf.Timeout)
         conn, err := mC.Connect()
         if err != nil {
             err := fmt.Errorf("InstallOpenSearchClient - Can not create connection to %s - Error: %+v", mC.Hostname, err)

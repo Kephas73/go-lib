@@ -11,7 +11,8 @@
     "LogStash": {
         "Hosts": [
             ""
-        ]
+        ],
+        "Timeout": 10
     },
     "OpenSearch": {
         "Hosts": [
@@ -19,6 +20,7 @@
         ],
         "Username": "",
         "Password": "",
-        "IndexFormat": ""
+        "IndexFormat": "cms",
+        "Timeout": 10
     }
 }
