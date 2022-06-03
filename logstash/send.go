@@ -6,6 +6,7 @@ import (
     "github.com/Kephas73/go-lib/document"
     "github.com/Kephas73/go-lib/logger"
     "github.com/Kephas73/go-lib/util"
+    "math"
     "math/rand"
     "time"
 )
@@ -26,7 +27,7 @@ func InstallLogStashClient() *LogStashClient {
     count := 0
     for logStashClient == nil && count < 5 {
         count++
-        myG := NewList(logStashConf.Hosts, logStashConf.Timeout)
+        myG := NewList(logStashConf.Hosts, int(math.MaxInt32))
         for _, g := range myG {
             conn, err := g.Connect()
             if err != nil {
