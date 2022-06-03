@@ -6,11 +6,11 @@ import (
     "crypto/tls"
     "encoding/json"
     "fmt"
-    "github.com/opensearch-project/opensearch-go"
-    "github.com/opensearch-project/opensearch-go/opensearchapi"
     "github.com/Kephas73/go-lib/document"
     "github.com/Kephas73/go-lib/logger"
     "github.com/Kephas73/go-lib/util"
+    "github.com/opensearch-project/opensearch-go"
+    "github.com/opensearch-project/opensearch-go/opensearchapi"
     "io"
     "io/ioutil"
     "net/http"
@@ -100,6 +100,44 @@ func (l *OpenSearch) CountDocument(index []string, bodyQuery io.Reader) (documen
     listQueries = append(listQueries, l.Connection.Count.WithContext(ctx))
 
     res, err := l.Connection.Count(listQueries...)
+    if err != nil {
+        logger.Error(fmt.Sprintf("OpenSearch::CountDocument - Count request error: %+v", err))
+        return result, err
+    }
+
+    dataLog, err := ioutil.ReadAll(res.Body)
+    if err != nil {
+        logger.Error(fmt.Sprintf("OpenSearch::CountDocument - Can not parse the body of response error: %+v", err))
+
+        return result, err
+    }
+
+    if res.IsError() {
+        logger.Error("OpenSearch::CountDocument - Count request is error: %s", dataLog)
+
+        return result, err
+    }
+
+    if err = json.Unmarshal(dataLog, &result); err != nil {
+        logger.Error(fmt.Sprintf("OpenSearch::CountDocument - Can not parse the response error: %+v", err))
+
+        return result, err
+    }
+
+    return result, nil
+}
+
+func (l *OpenSearch) SearchDocument(index []string, bodyQuery io.Reader) (document.Response, error) {
+    var result document.Response
+    ctx, cancel := context.WithTimeout(context.Background(), time.Duration(l.Timeout))
+    defer cancel()
+
+    listQueries := make([]func(request *opensearchapi.SearchRequest), 0)
+    listQueries = append(listQueries, l.Connection.Search.WithIndex(index...))
+    listQueries = append(listQueries, l.Connection.Search.WithBody(bodyQuery))
+    listQueries = append(listQueries, l.Connection.Search.WithContext(ctx))
+
+    res, err := l.Connection.Search(listQueries...)
     if err != nil {
         logger.Error(fmt.Sprintf("OpenSearch::CountDocument - Count request error: %+v", err))
         return result, err

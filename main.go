@@ -65,13 +65,23 @@ func main() {
 
     // Query open search
     opensearch.InstallOpenSearchClient()
+    rangeStringBuilder := new(document.RangeStringBuilder)
+    rangeStringBuilder.Range = make(map[string]interface{})
+    rangeStringBuilder.Range["@timestamp"] = map[string]interface{}{
+        "gte": "now-1h",
+    }
 
-    termString := new(document.TermStringBuilder)
-    termString.Term = make(map[string]interface{})
-    termString.Term["document.event_name.keyword"] = "ES_Pub"
+    termsStringBuilder := new(document.TermsStringBuilder)
+    termsStringBuilder.Terms = make(map[string]interface{})
+    termsStringBuilder.Terms["field"] = "document.data.IP.keyword"
+    termsStringBuilder.Terms["size"] = 1000000000
+
+    aggsConditionBuilder := new(document.AggsCondition)
+    aggsConditionBuilder.ResponseCodes = termsStringBuilder
 
     query := new(document.QueryBuilder)
-    query.Query.Bool.Must = append(query.Query.Bool.Must, termString)
+    query.Query.Bool.Must = append(query.Query.Bool.Must, rangeStringBuilder)
+    query.Aggs = aggsConditionBuilder
 
     var queryMapping map[string]interface{}
     _ = json.Unmarshal(util.JSONDebugData(query), &queryMapping)
@@ -81,12 +91,14 @@ func main() {
         panic(err)
     }
 
-    res, err := opensearch.GetOpenSearchClient().CountDocument([]string{"cms-*"}, &buf)
+    res, err := opensearch.GetOpenSearchClient().SearchDocument([]string{"vm_status-*"}, &buf)
     if err != nil {
         fmt.Println(err)
     }
-
-    fmt.Println(res.Count)
+    
+    fmt.Println(res)
+    fmt.Println(res.Aggregations.ResponseCodes.Buckets)
+    fmt.Println(len(res.Aggregations.ResponseCodes.Buckets))
 
 }
 

@@ -8,13 +8,13 @@ type Response struct {
         } `json:"Total,omitempty"`
     } `json:"hits,omitempty"`
     Aggregations struct {
-        CountBy struct {
+        ResponseCodes struct {
             Buckets []struct {
-                KeyAsString string `json:"key_as_string,omitempty"`
-                Key         int    `json:"key,omitempty"`
-                DocsCount   int    `json:"doc_count,omitempty"`
+                KeyAsString string      `json:"key_as_string,omitempty"`
+                Key         interface{} `json:"key,omitempty"`
+                DocsCount   int         `json:"doc_count,omitempty"`
             } `json:"buckets,omitempty"`
-        } `json:"count_by,omitempty"`
+        } `json:"response_codes,omitempty"`
     } `json:"aggregations,omitempty"`
 }
 
@@ -31,12 +31,7 @@ type RangeStringBuilder struct {
 }
 
 type AggsCondition struct {
-    CountBy struct {
-        DateHistogram struct {
-            Field            string `json:"field,omitempty"`
-            CalendarInterval string `json:"calendar_interval,omitempty"`
-        } `json:"date_histogram"`
-    } `json:"count_by,omitempty"`
+    ResponseCodes interface{} `json:"response_codes,omitempty"`
 }
 
 type QueryBuilder struct {
