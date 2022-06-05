@@ -13,7 +13,6 @@ import (
     "github.com/opensearch-project/opensearch-go/opensearchapi"
     "io"
     "io/ioutil"
-    "net/http"
     "time"
 )
 
@@ -39,9 +38,6 @@ func New(host []string, username, password, index string, timeout int) *OpenSear
 
 func (l *OpenSearch) Connect() (*opensearch.Client, error) {
     client, err := opensearch.NewClient(opensearch.Config{
-        Transport: &http.Transport{
-            TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-        },
         Addresses: l.Hostname,
         Username:  l.Username, // For testing only. Don't store credentials in code.
         Password:  l.Password,
