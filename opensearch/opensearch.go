@@ -3,7 +3,6 @@ package opensearch
 import (
     "bytes"
     "context"
-    "crypto/tls"
     "encoding/json"
     "fmt"
     "github.com/Kephas73/go-lib/document"
