@@ -12,6 +12,7 @@ import (
     "github.com/opensearch-project/opensearch-go/opensearchapi"
     "io"
     "io/ioutil"
+    "net/http"
     "time"
 )
 
@@ -37,6 +38,10 @@ func New(host []string, username, password, index string, timeout int) *OpenSear
 
 func (l *OpenSearch) Connect() (*opensearch.Client, error) {
     client, err := opensearch.NewClient(opensearch.Config{
+        Transport: &http.Transport{
+            MaxIdleConns:        50,
+            MaxIdleConnsPerHost: 50,
+        },
         Addresses: l.Hostname,
         Username:  l.Username, // For testing only. Don't store credentials in code.
         Password:  l.Password,
@@ -147,13 +152,11 @@ func (l *OpenSearch) SearchDocument(index []string, bodyQuery io.Reader) (docume
 
     if res.IsError() {
         logger.Error("OpenSearch::CountDocument - Count request is error: %s", dataLog)
-
-        return result, err
+        return result, fmt.Errorf(string(dataLog))
     }
 
     if err = json.Unmarshal(dataLog, &result); err != nil {
         logger.Error(fmt.Sprintf("OpenSearch::CountDocument - Can not parse the response error: %+v", err))
-
         return result, err
     }
 
