@@ -41,7 +41,7 @@ func InstallS3Client(configKeys ...string) *S3Client {
         }
     }
 
-    awsConfig := aws.NewConfig().WithRegion(constant.KDefaultAwsRegion).WithCredentials(credential)
+    awsConfig := aws.NewConfig().WithRegion(config.Region).WithCredentials(credential)
     if config.BaseURL != "" {
         awsConfig = awsConfig.WithEndpoint(config.BaseURL)
     }
