@@ -1,0 +1,9 @@
+{
+    "Etcd": {
+        "Addrs": [
+            ""
+        ],
+        "TLL": 30,
+        "ProjectName": "test"
+    }
+}
