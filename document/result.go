@@ -14,6 +14,7 @@ type Response struct {
                 Key       interface{} `json:"key,omitempty"`
                 DocsCount int         `json:"doc_count,omitempty"`
             } `json:"buckets,omitempty"`
+            Value int `json:"value,omitempty"`
         } `json:"response_codes,omitempty"`
     } `json:"aggregations,omitempty"`
 }
@@ -24,6 +25,10 @@ type TermStringBuilder struct {
 
 type TermsStringBuilder struct {
     Terms map[string]interface{} `json:"terms,omitempty"`
+}
+
+type CardinalityStringBuilder struct {
+    Cardinality map[string]interface{} `json:"cardinality,omitempty"`
 }
 
 type RangeStringBuilder struct {

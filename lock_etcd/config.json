@@ -1,7 +1,7 @@
 {
     "Etcd": {
         "Addrs": [
-            ""
+            "etcd.gtvplusdev.info.private:2379"
         ],
         "TLL": 30,
         "ProjectName": "test"
